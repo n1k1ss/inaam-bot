@@ -1,0 +1,7 @@
+aiogram
+re
+asyncpg
+xlsxwriter
+io
+zoneinfo
+functools
