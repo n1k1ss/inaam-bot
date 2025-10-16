@@ -1,4 +1,5 @@
 from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.memory import MemoryStorage
 from dotenv import load_dotenv
 import os
 import asyncio
@@ -23,8 +24,12 @@ logger.info("Запуск бота")
 load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN")
 
+if not TOKEN:
+    logger.exception("BOT_TOKEN не найден в .env [main.py]")
+    exit(1)
+
 bot = Bot(token=TOKEN)
-dp = Dispatcher()
+dp = Dispatcher(storage=MemoryStorage())
 
 register_start_handler(dp)
 register_get_id_handler(dp, bot)
@@ -54,8 +59,8 @@ async def main():
         db_main_admin_ids_exists = await db.fetchrow("SELECT 1 FROM main_admin_ids")
         if not db_main_admin_ids_exists:
             await db.execute("INSERT INTO main_admin_ids (id) VALUES ($1)", 7167370884)
-    except:
-        logger.exception("Ошибка создания БД [main_admin_ids]")
+    except Exception as e:
+        logger.exception(f"Ошибка создания БД [main_admin_ids] [{e}]")
 
     try:
         await db.execute("""
@@ -63,8 +68,8 @@ async def main():
                 id BIGINT UNIQUE
             )
         """)
-    except:
-        logger.exception("Ошибка создания БД [worker_ids]")
+    except Exception as e:
+        logger.exception(f"Ошибка создания БД [worker_ids] [{e}]")
 
     try:
         await db.execute("""
@@ -75,8 +80,8 @@ async def main():
         db_balance_exists = await db.fetchrow("SELECT 1 FROM balance")
         if not db_balance_exists:
             await db.execute("INSERT INTO balance (amount) VALUES (0)")
-    except:
-        logger.exception("Ошибка создания БД [balance]")
+    except Exception as e:
+        logger.exception(f"Ошибка создания БД [balance] [{e}]")
 
     try:
         await db.execute("""
@@ -90,8 +95,8 @@ async def main():
                 amount BIGINT
             )
         """)
-    except:
-        logger.exception("Ошибка создания БД [balance_expenses]")
+    except Exception as e:
+        logger.exception("Ошибка создания БД [balance_expenses] [{e}]")
 
     try:
         await db.execute("""
@@ -102,13 +107,13 @@ async def main():
         db_set_time_exists = await db.fetchrow("SELECT 1 FROM set_time")
         if not db_set_time_exists:
             await db.execute("INSERT INTO set_time (region) VALUES ('America/New_York')")
-    except:
-        logger.exception("Ошибка создания БД [set_time]")
+    except Exception as e:
+        logger.exception(f"Ошибка создания БД [set_time] [{e}]")
 
     try:
-        await dp.start_polling(bot)
-    except:
-        logger.exception("Во время работы бота произошла ошибка")
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+    except Exception as e:
+        logger.exception(f"Во время работы бота произошла ошибка [main.py] [{e}]")
     finally:
         await db.disconnect()
         logger.info("Отключение бота")
