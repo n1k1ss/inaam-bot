@@ -4,7 +4,6 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.types import BufferedInputFile
-from aiogram.types import WebAppInfo, CopyTextButton
 from aiogram.exceptions import TelegramBadRequest
 
 from handlers.get_date import get_datetime
@@ -40,20 +39,6 @@ def get_wor_keyboard() -> InlineKeyboardMarkup:
         [
             InlineKeyboardButton(text="Траты 💸", callback_data="expenses"),
             InlineKeyboardButton(text="🔄", callback_data="refresh_balance")
-        ]
-    ])
-
-def get_website_link_keyboard() -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(inline_keyboard=[
-        [
-            InlineKeyboardButton(text="Сайт 🌐", web_app=WebAppInfo(url="https://inaam.ru"))
-        ],
-        [
-            InlineKeyboardButton(text="Почта 📨", copy_text=CopyTextButton(text="info@inaam.ru")),
-            InlineKeyboardButton(text="Телефон 📞", copy_text=CopyTextButton(text="+79852320202"))
-        ],
-        [
-            InlineKeyboardButton(text="Telegram 💬", url="t.me/oleynik_INAAM")
         ]
     ])
 

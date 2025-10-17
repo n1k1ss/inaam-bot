@@ -4,7 +4,8 @@ from aiogram.filters import CommandStart
 from aiogram.enums import ParseMode
 import re
 
-from keyboards.admin_keyboard import get_adm_keyboard, get_wor_keyboard, get_website_link_keyboard
+from keyboards.admin_keyboard import get_adm_keyboard, get_wor_keyboard
+from keyboards.user_keyboard import get_user_keyboard
 from handlers.db import db
 from handlers.get_current_balance import get_current_balance
 
@@ -44,7 +45,7 @@ def register_start_handler(dp: Dispatcher):
             else:
                 logger.info(f"[{message.from_user.id}] {message.from_user.first_name} запустил бота [Роль: Пользователь 🙎‍♂️]")
 
-                keyboard_user = get_website_link_keyboard()
+                keyboard_user = get_user_keyboard()
 
                 await message.answer(
                     f"<b>Привет, {message.from_user.first_name}</b> 👋",
