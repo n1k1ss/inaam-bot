@@ -16,6 +16,7 @@ from handlers.send_requests import register_send_request_adm_handler, register_s
 from handlers.set_time_gmt import register_set_time_gmt_handler
 from handlers.all_commands_note import register_all_commands_note_handler
 from keyboards.admin_keyboard import register_adm_callbacks
+from handlers.inline_mode import register_inline_mode_handler
 
 from handlers.db import db
 
@@ -42,6 +43,7 @@ register_send_request_adm_handler(dp, bot)
 register_send_request_wor_handler(dp, bot)
 register_set_time_gmt_handler(dp)
 register_all_commands_note_handler(dp)
+register_inline_mode_handler(dp)
 
 @dp.message(F.photo)
 async def get_photo_id(message: Message):
