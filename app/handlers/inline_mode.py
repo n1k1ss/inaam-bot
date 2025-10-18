@@ -3,7 +3,7 @@ from aiogram.enums import ParseMode
 
 def register_inline_mode_handler(dp):
     @dp.inline_query()
-    async def inline_echo(inline_query: InlineQuery):
+    async def inline_mode(inline_query: InlineQuery):
         web_site = InlineQueryResultArticle(
             id="1",
             title="Сайт",
