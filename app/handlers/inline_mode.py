@@ -2,6 +2,7 @@ from aiogram.types import InlineQueryResultArticle, InputTextMessageContent, Inl
 from aiogram.enums import ParseMode
 from dotenv import load_dotenv
 import os
+from inaam_bot_logger import logger
 
 load_dotenv()
 
@@ -31,3 +32,4 @@ def register_inline_mode_handler(dp):
         )
 
         await inline_query.answer(results=[inaam_web_site, inaam_admin_phone, inaam_admin_email], cache_time=1)
+        logger.info("Вызван inline мод")
