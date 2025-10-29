@@ -24,7 +24,7 @@ def only_admin_access(db, type):
             @wraps(func)
             async def wrapper(message: Message, *args, **kwargs):
                 if not await is_admin(message.from_user.id, type, db):
-                    logger.info(f"[{message.from_user.id}] Попытка использовать команду {message.text} [{message.from_user.first_name}]")
+                    logger.info(f"[{message.from_user.id}] Попытка использовать команду / нажать на кнопку [{message.from_user.first_name}]")
                     await message.delete()
                     await message.answer("🚫 <b>У вас нет доступа к этой команде</b>", parse_mode=ParseMode.HTML)
                     return
@@ -33,3 +33,5 @@ def only_admin_access(db, type):
         return decorator
     except Exception as e:
         logger.exception(f"Ошибка в функции only_admin_access [only_admin.py] [{e}]")
+
+#
