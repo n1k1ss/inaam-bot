@@ -32,4 +32,4 @@ def register_inline_mode_handler(dp):
         )
 
         await inline_query.answer(results=[inaam_web_site, inaam_admin_phone, inaam_admin_email], cache_time=1)
-        logger.info("Вызван inline мод")
+        logger.info(f"[{inline_query.from_user.id}] Вызван inline мод")
